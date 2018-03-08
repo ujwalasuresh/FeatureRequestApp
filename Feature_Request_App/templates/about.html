@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+  {% block content %}
+    <h1>About page</h1>
+    <div>
+    <p>
+    Demo web app by Ujawala on Flask using REST.
+
+    <h3>Technologies used:</h3>
+    <ul>
+        <li>OS: Ubuntu</li>
+        <li>Server Side Scripting: Python 2.7+ or 3.5+</li>
+        <li>Server Framework: Flask or SimpleHTTPServer</li>
+        <li>ORM: Sql-Alchemy</li>
+        <li>JavaScript: KnockoutJS</li>
+    </ul>
+    </p>
+    <p>
+    <h3> Initial requirements</h3>
+        Build a web application that allows the user to create "feature requests".
+
+A "feature request" is a request for a new feature that will be added onto an existing piece of software. Assume that the user is an employee at IWS who would be entering this information after having some correspondence with the client that is requesting the feature. The necessary fields are:
+<ul>
+<li><i>Title:</i> A short, descriptive name of the feature request.</li>
+<li><i>Description:</i> A long description of the feature request.</li>
+<li><i>Client:</i> A selection list of clients (use "Client A", "Client B", "Client C")</li>
+<li><i>Client Priority:</i> A numbered priority according to the client (1...n). Client Priority numbers should not repeat for the given client, so if a priority is set on a new feature as "1", then all other feature requests for that client should be reordered.</li>
+<li><i>Target Date:</i> The date that the client is hoping to have the feature.</li>
+<li><i>Ticket URL:</i> A field for storing any URL</li>
+<li><i>Product Area:</i> A selection list of product areas (use 'Policies', 'Billing', 'Claims', 'Reports')</li>
+
+</ul>
+
+    </div>
+
+
+  {% endblock content %}

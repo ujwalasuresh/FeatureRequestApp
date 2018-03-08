@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+  {% block content %}
+
+    <h1>Home page</h1>
+	<p>
+		{% if logged == true %}
+			<a align="right" href="{{ url_for('logout') }}">Logout</a>
+		{% else %}
+			<span>You need to <a align="right" href="{{ url_for('login') }}">Login</a> first</span>
+		{% endif %}
+	</p>
+	<p>
+		<a href="{{ url_for('requests_and_tickets') }}">Fill a ticket request and see a list of existing requests</a>
+	</p>
+	{% if error %}
+		<p class="error"><string>Error:</string>{{ error }}</p>
+	{% endif %}
+
+  {% endblock content %}

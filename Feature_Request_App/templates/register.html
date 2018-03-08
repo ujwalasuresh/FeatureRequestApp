@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+  {% block content %}
+    <h1>Register page</h1>
+<form action="" method='POST'>
+    <p><input type="text" name="username" placeholder="Username" size="30" value="{{ request.form.username }}"></p>
+    <p><input type="text" name="email" size="30" placeholder="Email" value="{{ request.form.email }}"></p>
+    <p><input type="password" name="password1" placeholder="Password" size="30" value="{{ request.form.password1 }}"></p>
+    <p><input type="password" name="password2" placeholder="Repeat Password" size="30" value="{{ request.form.password2 }}"></p>
+    <input class="btn btn-default" type="submit" value="Sign Up">
+ </form>
+	{% if error %}
+		<p class="error has-error"><string>Error: {{ error }}</string></p>
+	{% endif %}
+  {% endblock content %}

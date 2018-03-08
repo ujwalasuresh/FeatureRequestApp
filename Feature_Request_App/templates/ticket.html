@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+  {% block content %}
+    <h1>Request ticket page - ID: {{ ticket.id }}</h1>
+
+	<table class="table table-striped table-hover table-responsive table-bordered">
+        <tr>
+            <td>ID</td>
+            <td>{{ticket.id}}</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>{{ticket.title}}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{ticket.description}}</td>
+        </tr>
+        <tr>
+            <td>Client</td>
+            <td>{{ticket.client}}</td>
+        </tr>
+        <tr>
+            <td>Client Priority</td>
+            <td>{{ticket.client_priority}}</td>
+        </tr>
+        <tr>
+            <td>Target Date</td>
+            <td>{{ticket.target_date}}</td>
+        </tr>
+        <tr>
+            <td>Ticket URL</td>
+            <td>{{ticket.ticket_url}}</td>
+        </tr>
+        <tr>
+            <td>Product Area</td>
+            <td>{{ticket.product_area}}</td>
+        </tr>
+
+    </table>
+  {% endblock content %}
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog

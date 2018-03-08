@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - No such ticket id</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"></link>
+</head>
+<body>
+<div id="error">
+    <p>You requested ticket id: {{ticket_id}}</p>
+    <p>Sorry, no such ticket in our database.</p>
+    <p>Please contact the support team for help</p>
+</div>
+</body>
+</html>
