@@ -57,15 +57,10 @@ def insert_new(title, description, client, client_priority, target_date, url_roo
 
 
 def check_priorities_EL(priority, user_id):
-    """
-    checks if there are any entries with equal of less priotiry
-    :param priority:
-    :return: list of id of the entries with equal or less priority
-    """
     check = []
-    for row in s.query(RequestTicket)\
-                .filter(RequestTicket.user_id == user_id)\
-                .filter(RequestTicket.client_priority >= priority).all():
+    print priority
+    print user_id
+    for row in s.query(RequestTicket).filter(RequestTicket.user_id == user_id).filter(RequestTicket.client_priority >= priority).all():
         check.append(row.id)
     return check
 
@@ -94,8 +89,7 @@ def get_possible_priorities(user_id):
     :return: gathers all existing priorities and adds one more at the end
     """
     priority_list = []
-    for p, in s.query(RequestTicket.client_priority)\
-               .filter(RequestTicket.user_id == user_id).all():
+    for p, in s.query(RequestTicket.client_priority).filter(RequestTicket.user_id == user_id).all():
         priority_list.append(p)
     # and the next one
     if len(priority_list) > 0:
@@ -111,8 +105,7 @@ def get_gaps(user_id):
     :return: a list with gaps in priorities
     """
     priority_list = []
-    for p, in s.query(RequestTicket.client_priority)\
-               .filter(RequestTicket.user_id == user_id).all():
+    for p, in s.query(RequestTicket.client_priority).filter(RequestTicket.user_id == user_id).all():
         priority_list.append(p)
     priority_gap_list = []
     max_p = 0
@@ -127,11 +120,6 @@ def get_gaps(user_id):
 
 
 def eleminate_gaps(gap_list):
-    """
-    TODO: develop function to eleminate all gaps by updating priorities for existing entries
-    :param gap_list:
-    :return:
-    """
     for g in sorted(gap_list, reversed):
         for priority in range(g+1, int(s.query(func.max(RequestTicket.client_priority)).scalar())+1):
             try:

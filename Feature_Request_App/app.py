@@ -22,44 +22,23 @@ ticket_fields = {"id": fields.Integer,
 
 
 class FeatureRequest_api(Resource):
-    """
-REST
+    @marshal_with(ticket_fields)
+    def get(self, param):
+        if param == "all":
+           output = db.get_all(session['user_id'])
+        return output, 200
 
 
-class for Feature request operations
-
-
-"""
-@marshal_with(ticket_fields)
-def get(self, param):
-    """
-function
-for GET method
-    :param
-    param:
-    :return:
-    """
-    if param == "all":
-       output = db.get_all(session['user_id'])
-       return output, 200
-
-
-def post(self, param):
-  """
-    function
-    for POST method
-        :param
-        param:
-        :return:
-
-#print session['user_id']
-  """
-  if param =="new":
-     priority = request.form.get('client_priority')
-     entries_to_downgrade = db.check_priorities_EL(priority, session['user_id'])
-     if len(entries_to_downgrade) > 0:
-        db.downgrade_priorities(entries_to_downgrade)
-        db.insert_new(title=request.form.get('title'),
+    def post(self, param):
+        if param =="new":
+           priority = request.form.get('client_priority')
+           print priority
+           print "in new post"
+           entries_to_downgrade = db.check_priorities_EL(priority, session['user_id'])
+           print entries_to_downgrade
+           if len(entries_to_downgrade) > 0:
+              db.downgrade_priorities(entries_to_downgrade)
+              db.insert_new(title=request.form.get('title'),
                   description=request.form.get('description'),
                   client=request.form.get('client'),
                   client_priority=request.form.get('client_priority'),
@@ -67,25 +46,36 @@ def post(self, param):
                   url_root=request.form.get('url_root'),
                   product_area=request.form.get('product_area'),
                   user_id=session['user_id'])
-     return '', 201
+           else:
+                db.downgrade_priorities(entries_to_downgrade)
+                db.insert_new(title=request.form.get('title'),
+                   description=request.form.get('description'),
+                   client=request.form.get('client'),
+                   client_priority=request.form.get('client_priority'),
+                   target_date=request.form.get('target_date'),
+                   url_root=request.form.get('url_root'),
+                   product_area=request.form.get('product_area'),
+                   user_id=session['user_id'])
+           return '', 201
 
 
-def delete(self, param):
-    if param == 'delete':
-       db.delete_entry(request.form.get('id'))
-       gaps = db.get_gaps(session['user_id'])
-       if len(gaps) > 0:
-          db.eleminate_gaps(gaps)
-    return '', 204
+
+    def delete(self, param):
+        if param == 'delete':
+           db.delete_entry(request.form.get('id'))
+           gaps = db.get_gaps(session['user_id'])
+           if len(gaps) > 0:
+              db.eleminate_gaps(gaps)
+        return '', 204
 
 
-def put(self, param):
-    if param == 'update':
-       ticket_id = request.form.get('id')
-       a = str(db.get_requests_by_id_list([ticket_id])[0])
-       b = ast.literal_eval(a)
-       if b["client_priority"] == str(request.form.get('client_priority')):
-          db.update_entry(id=request.form.get('id'),
+    def put(self, param):
+        if param == 'update':
+           ticket_id = request.form.get('id')
+           a = str(db.get_requests_by_id_list([ticket_id])[0])
+           b = ast.literal_eval(a)
+           if b["client_priority"] == str(request.form.get('client_priority')):
+              db.update_entry(id=request.form.get('id'),
                   title=request.form.get('title'),
                   description=request.form.get('description'),
                   client=request.form.get('client'),
@@ -93,28 +83,28 @@ def put(self, param):
                   target_date=request.form.get('target_date'),
                   url_root=request.form.get('url_root'),
                   product_area=request.form.get('product_area'))
-    else:
-          ticket_id = request.form.get('id')
-          db.delete_entry(ticket_id)
-          gaps = db.get_gaps(session['user_id'])
-          if len(gaps) > 0:
-             db.eleminate_gaps(gaps)
-             entries_to_downgrade = db.check_priorities_EL(request.form.get('client_priority'), session['user_id'])
-          if len(entries_to_downgrade) > 0:
-             db.downgrade_priorities(entries_to_downgrade)
-             db.insert_new(ind=request.form.get('id'),
-                  title=request.form.get('title'),
-                  description=request.form.get('description'),
-                  client=request.form.get('client'),
-                  client_priority=request.form.get('client_priority'),
-                  target_date=request.form.get('target_date'),
-                  url_root=request.form.get('url_root'),
-                  product_area=request.form.get('product_area'),
-                  user_id=session['user_id'])
-          gaps = db.get_gaps(session['user_id'])
-    if len(gaps) > 0:
-       db.eleminate_gaps(gaps)
-    return '', 201
+           else:
+               ticket_id = request.form.get('id')
+               db.delete_entry(ticket_id)
+               gaps = db.get_gaps(session['user_id'])
+               if len(gaps) > 0:
+                  db.eleminate_gaps(gaps)
+                  entries_to_downgrade = db.check_priorities_EL(request.form.get('client_priority'), session['user_id'])
+                  if len(entries_to_downgrade) > 0:
+                     db.downgrade_priorities(entries_to_downgrade)
+                     db.insert_new(ind=request.form.get('id'),
+                     title=request.form.get('title'),
+                     description=request.form.get('description'),
+                     client=request.form.get('client'),
+                     client_priority=request.form.get('client_priority'),
+                     target_date=request.form.get('target_date'),
+                     url_root=request.form.get('url_root'),
+                     product_area=request.form.get('product_area'),
+                     user_id=session['user_id'])
+                     gaps = db.get_gaps(session['user_id'])
+                     if len(gaps) > 0:
+                        db.eleminate_gaps(gaps)
+        return '', 201
 
 
 class Utils_api(Resource):
@@ -126,14 +116,14 @@ class Utils_api(Resource):
   if param == "production_areas":
     return db.get_production_area_list()
 
-def post(self, param):
- pass
+ def post(self, param):
+     pass
 
-def delete(self):
- pass
+ def delete(self):
+     pass
 
-def update(self):
- pass
+ def update(self):
+     pass
 
 
 def login_required(f):
