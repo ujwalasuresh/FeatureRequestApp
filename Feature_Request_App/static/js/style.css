@@ -1,0 +1,45 @@
+table {
+    font-family: Georgia;
+    z-index: 1
+}
+
+table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #eeeeea;}
+
+
+td {
+    height: 50px;
+    vertical-align: center;
+    padding: 5px;
+}
+
+#error{
+    font-family: "Lucida Console";
+    font-size: 1.875em;
+    font-weight: normal;
+}
+
+#ticket_list li:hover {
+          background-color: #eeeeea;;
+        }
+
+#date {
+    -webkit-appearance: textfield;
+    background-color: white;
+    backface-visibility: hidden;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    cursor: auto;
+    padding: 1px;
+    border: 2px inset;
+    z-index: 9999;
+    border-style: groove;
+}
+
+.body {
+    padding-bottom: 70px;
+}
+
+.footer {
+    padding-left: 4em;
+}
